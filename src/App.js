@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 import { View, Text } from 'react-native';
+import { MenuProvider } from 'react-native-popup-menu';
+import { NavigationContainer } from '@react-navigation/native';
 import SplashScreen from 'react-native-splash-screen';
+import DrawerNavigator from './navigation/DrawerNavigator';
 
 export default function App() {
 
@@ -9,9 +12,10 @@ export default function App() {
   }, [])
 
   return (
-    <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>
-      <Text style={{ fontFamily: 'VeniceClassic', color: 'rgb(46,46,56)', fontSize: 60 }}>Header</Text>
-      <Text style={{ fontFamily: 'ZillaSlab-Medium', color: 'rgb(46,46,56)', fontSize: 18 }}>Body sample text</Text>
-    </View>
+    <MenuProvider>
+      <NavigationContainer>
+        <DrawerNavigator />
+      </NavigationContainer>
+    </MenuProvider>
   )
 }

@@ -1,0 +1,9 @@
+export const black = '#000000';
+export const blackRaisin = '#2E2E38';
+export const blueAero = '#82BCE8';
+export const blueYinmin = '#374C8B';
+export const greyLight = '#CBCBCB'
+export const brownSaddle = '#983E00';
+export const roseFiery = '#EA5F68';
+export const yellowSelective = '#FEBC16';
+export const white = '#FFFFFF';
