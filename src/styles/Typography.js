@@ -1,6 +1,6 @@
 import * as Color from './Colors';
 
-export const headerOnboardingFontSize = 32;
+export const headerTitleFontSize = 32;
 export const headerFontSize = 48;
 export const bodyFontSize = 18;
 
@@ -11,7 +11,12 @@ export const header = {
 }
 export const headerOnboarding = {
     color: Color.blackRaisin,
-    fontSize: headerOnboardingFontSize,
+    fontSize: headerTitleFontSize,
+    fontFamily: 'VeniceClassic',
+}
+export const headerTitle = {
+    color: Color.blackRaisin,
+    fontSize: headerTitleFontSize,
     fontFamily: 'VeniceClassic',
 }
 export const body = {

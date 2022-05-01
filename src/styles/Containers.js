@@ -9,6 +9,11 @@ export const onboardingTouchableRight = {
     ...Typography.body,
     marginRight: '15%',
 }
+export const centered = {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+}
 export const container = {
     backgroundColor: Color.white,
     width: '100%',
