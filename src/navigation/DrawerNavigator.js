@@ -99,7 +99,7 @@ export default function DrawerNavigator() {
                 <Drawer.Screen name="Exit" component={Exit} 
                     options={{
                         drawerLabel: () => <Text style={body}>Salir</Text>,
-                        drawerIcon: () => (<ExitBlack/>),
+                        drawerIcon: () => <ExitBlack/>,
                         headerShown: false,
                     }}               
                 />

@@ -2,10 +2,9 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as Color from '../../styles/Colors';
 import { headerTitle } from '../../styles/Typography';
-import ListTaskScreen from '../../containers/ListTask';
 import CreateTaskScreen from '../../containers/CreateTask';
-import EditTaskScreen from '../../containers/EditTask';
-import { Image, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
+import { BackBlack, BackWhite, DropDownBlack, DropDownWhite } from '../../styles/Icons';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,14 +24,14 @@ export default function CreateTaskStack({ navigation }) {
                     headerLeft: () => {
                         return (
                             <TouchableOpacity onPress={() => navigation.navigate('Mis tareas')}>
-                                <Image source={require('../../assets/icons/black/back-black.png')} />
+                                <BackBlack />
                             </TouchableOpacity>
                         );
                     },
                     headerRight: () => {
                         return (
                             <TouchableOpacity onPress={() => navigation.openDrawer()}>
-                                <Image source={require('../../assets/icons/black/drawermenu-black.png')} />
+                                <DropDownBlack />
                             </TouchableOpacity>
                         );
                     },
