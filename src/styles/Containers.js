@@ -15,6 +15,12 @@ export const centered = {
     alignSelf: 'center',
     justifyContent: 'center',
 }
+export const beginning = {
+    flex: 1,
+    alignItems: 'center',
+    alignSelf: 'flex-start',
+    justifyContent: 'center',
+}
 export const container = {
     backgroundColor: Color.white,
     width: '100%',
