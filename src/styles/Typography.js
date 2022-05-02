@@ -1,12 +1,13 @@
 import * as Color from './Colors';
 
 export const headerTitleFontSize = 32;
-export const headerFontSize = 48;
+export const headerListFontSize = 48;
 export const bodyFontSize = 18;
+export const bodyInfoFontSize = 16;
 
-export const header = {
+export const headerList = {
     color: Color.blackRaisin,
-    fontSize: headerFontSize,
+    fontSize: headerListFontSize,
     fontFamily: 'VeniceClassic',
 }
 export const headerOnboarding = {
@@ -23,6 +24,20 @@ export const body = {
     color: Color.blackRaisin,
     fontSize: bodyFontSize,
     fontFamily: 'ZillaSlab-Medium',
+}
+export const bodyInfo = {
+    textAlign: 'justify',
+    color: Color.blackRaisin,
+    fontSize: bodyInfoFontSize,
+    fontFamily: 'ZillaSlab-Medium',
+}
+export const bodyInfoBold = {
+    color: Color.blackRaisin,
+    fontSize: bodyInfoFontSize,
+    fontFamily: 'ZillaSlab-Bold',
+}
+export const bodyInfoItalic = {
+    fontFamily: 'ZillaSlab-Italic',
 }
 export const footer = {
     color: Color.blackRaisin,

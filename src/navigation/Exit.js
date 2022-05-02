@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { View, Text, BackHandler } from "react-native";
-import { header } from "../styles/Typography";
+import { headerList } from "../styles/Typography";
 import { centered } from "../styles/Containers";
 
 export default function Exit() {
@@ -11,7 +11,7 @@ export default function Exit() {
 
     return (
         <View style={centered}>
-            <Text style={header}>...</Text>
+            <Text style={headerList}>...</Text>
         </View>
     );
 }

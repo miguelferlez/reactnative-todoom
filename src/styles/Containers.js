@@ -12,12 +12,23 @@ export const onboardingTouchableRight = {
 export const centered = {
     flex: 1,
     alignItems: 'center',
+    alignSelf: 'center',
     justifyContent: 'center',
 }
 export const container = {
     backgroundColor: Color.white,
     width: '100%',
     height: '100%',
-    padding: 20,
+    padding: 22,
+}
+export const paragraph = {
+    marginBottom: 20,
+}
+export const linkIcon = {
+    flexDirection: 'row',
+    justifyContent: 'center',
+}
+export const linkText = {
+    marginLeft: 10,
 }
 

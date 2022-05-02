@@ -3,7 +3,7 @@ import { View, Text, Image } from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import OnboardingScreen from '../containers/Onboarding'
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { body, header } from "../styles/Typography";
+import { body, headerList } from "../styles/Typography";
 import * as Color from '../styles/Colors';
 import TaskStack from "./stacks/TaskStack";
 import CreateTaskStack from "./stacks/CreateTaskStack";
@@ -36,7 +36,7 @@ export default function DrawerNavigator() {
     if (isLoading) {
         return (
             <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>
-                <Text style={header}>...</Text>
+                <Text style={headerList}>...</Text>
             </View>
         );
     } else if (!isDrawerVisible && onboardingShown === 0) {
