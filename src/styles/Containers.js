@@ -27,6 +27,10 @@ export const container = {
     height: '100%',
     padding: 22,
 }
+export const containerDarkMode = {
+    ...container,
+    backgroundColor: Color.blackRaisin,
+}
 export const paragraph = {
     marginBottom: 20,
 }
@@ -36,5 +40,20 @@ export const linkIcon = {
 }
 export const linkText = {
     marginLeft: 10,
+}
+export const normalField = {
+    flex:1,
+    flexDirection:'row',
+    alignItems:'center',
+}
+export const button = {
+    backgroundColor: Color.blackRaisin,
+    padding: 10,
+    borderRadius: 20,
+}
+export const buttonDarkMode = {
+    backgroundColor: Color.white,
+    padding: 10,
+    borderRadius: 20,
 }
 

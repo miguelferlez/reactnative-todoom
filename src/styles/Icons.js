@@ -31,8 +31,8 @@ export const GithubBlack = () => <SvgXml xml={githubBlack} width="32px" height="
 export const MailBlack = () => <SvgXml xml={mailBlack} width="32px" height="32px" />
 export const PhoneBlack = () => <SvgXml xml={phoneBlack} width="32px" height="32px" />
 export const TwitterBlack = () => <SvgXml xml={twitterBlack} width="32px" height="32px" />
-export const LightModeBlack = () => <SvgXml xml={lightModeBlack} width="32px" height="32px" />
-export const DarkModeBlack = () => <SvgXml xml={darkModeBlack} width="32px" height="32px" />
+export const LightModeBlack = () => <SvgXml xml={lightModeBlack} width="20px" height="20px" />
+export const DarkModeBlack = () => <SvgXml xml={darkModeBlack} width="20px" height="20px" />
 
 //Dark mode on
 const listTaskWhite = '<svg id="white" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="320" height="320" viewBox="0 0 320 320"> <image id="tareas_v2" data-name="tareas v2" width="320" height="300" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAEsCAYAAACypmqLAAAEmklEQVR4nO3dS1KEUBBFQTDY/5afK2gH8rHkZK4AGuNEjbz7Ntxaa01/RuCj0Y35GvAMAH9CAIEsAQSyBBDIEkAgSwCBLAEEsgQQyBJAIEsAgSwBBLIEEMgSQCBLAIEsAQSyBBDIEkAgSwCBLAEEsi7/f/03bHhM3y2xWQLPubQHLkAgSwCBLAEEsgQQyBJAIEsAgSwBBLIEEMgSQCBLAIEsAQSyBBDIEkAgSwCBLAEEsgQQyBJAIEsAgSwBBLL24IbHdDZG4CEuQCBLAIEsAQSyBBDIEkAgSwCBLAEEsgQQyBJAIEsAgSwBBLIEEMgSQCBLAIEsAQSyBBDIEkAgSwCBLAEEso4bXry2aTF9A6W20WLjZpbRPXABAlkCCGQJIJAlgECWAAJZAghkCSCQJYBAlgACWQIIZAkgkCWAQJYAAlkCCGQJIJAlgECWAAJZAghkCSCQNX7vYK3axIhNi5NyfzD8ngsQyBJAIEsAgSwBBLIEEMgSQCBLAIEsAQSyBBDIEkAgSwCBLAEEsgQQyBJAIEsAgSwBBLIEEMgSQCBLAIGsw6eHH9U2Va42eqPFBQhkCSCQJYBAlgACWQIIZAkgkCWAQJYAAlkCCGQJIJAlgECWAAJZAghkCSCQJYBAlgACWQIIZAkgkCWAQJZNkPcbvcnwD/j9XswFCGQJIJAlgECWAAJZAghkCSCQJYBAlgACWQIIZAkgkCWAQJYAAlkCCGQJIJAlgECWAAJZAghkCSCQJYBAlk2Q99uHv+HVmxvT37dm9KaKCxDIEkAgSwCBLAEEsgQQyBJAIEsAgSwBBLIEEMgSQCBLAIEsAQSyBBDIEkAgSwCBLAEEsgQQyBJAIEsAgSybIO83epPhBrX35QQXIJAlgECWAAJZAghkCSCQJYBAlgACWQIIZAkgkCWAQJYAAlkCCGQJIJAlgECWAAJZAghkCSCQJYBAlgACWTZB3m+v/wDDXL1ZMv37jt5ocQECWQIIZAkgkCWAQJYAAlkCCGQJIJAlgECWAAJZAghkCSCQJYBAlgACWQIIZAkgkCWAQJYAAlkCCGQJIJBlE+T9Rm8ycJrve4ILEMgSQCBLAIEsAQSyBBDIEkAgSwCBLAEEsgQQyBJAIEsAgSwBBLIEEMgSQCBLAIEsAQSyBBDIEkAgSwCBrGOtZVPgnN3zwUej++ICBLIEEMgSQCBLAIEsAQSyBBDIEkAgSwCBLAEEsgQQyBJAIEsAgSwBBLIEEMgSQCBLAIEsAQSyBBDIEkAg67jhxW1QzGLzBT5wAQJZAghkCSCQJYBAlgACWQIIZAkgkCWAQJYAAlkCCGQJIJAlgECWAAJZAghkCSCQJYBAlgACWQIIZAkgkHX5fsda6+oNiukbIzY34DmX9sAFCGQJIJAlgECWAAJZAghkCSCQJYBAlgACWQIIZAkgkCWAQJYAAlkCCGQJIJAlgECWAAJZAghkCSCQJYBA1vS9jTs2RoDnjG6MCxDIEkAgSwCBLAEEsgQQyBJAIEsAgSwBBLIEEMgSQCBLAIEsAQSyBBDIEkAgSwCBLAEEsgQQyBJAIEsAgaZt274Bi3EySAlo9NcAAAAASUVORK5CYII="/> </svg> ';
@@ -64,5 +64,5 @@ export const GithubWhite = () => <SvgXml xml={githubWhite} width="32px" height="
 export const MailWhite = () => <SvgXml xml={mailWhite} width="32px" height="32px" />
 export const PhoneWhite = () => <SvgXml xml={phoneWhite} width="32px" height="32px" />
 export const TwitterWhite = () => <SvgXml xml={twitterWhite} width="32px" height="32px" />
-export const LightModeWhite = () => <SvgXml xml={lightModeWhite} width="32px" height="32px" />
-export const DarkModeWhite = () => <SvgXml xml={darkModeWhite} width="32px" height="32px" />
+export const LightModeWhite = () => <SvgXml xml={lightModeWhite} width="20px" height="20px" />
+export const DarkModeWhite = () => <SvgXml xml={darkModeWhite} width="20px" height="20px" />

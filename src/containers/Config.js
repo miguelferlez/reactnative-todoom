@@ -1,15 +1,50 @@
-import React from "react";
-import { View, Text } from "react-native";
-import { container } from "../styles/Containers";
-import * as Typography from '../styles/Typography';
+import React, { useEffect, useState } from "react";
+import { View, ScrollView, Text, TouchableOpacity } from "react-native";
+import { paragraph, container, containerDarkMode, centered, normalField, linkIcon, linkText, button, buttonDarkMode } from "../styles/Containers";
+import { headerTitle, headerTitleDarkMode, body, bodyDarkMode, bodyInfoBold, bodyInfoBoldDarkMode } from "../styles/Typography";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import RNRestart from 'react-native-restart';
+import { DarkModeWhite, DarkModeBlack, LightModeWhite, LightModeBlack } from "../styles/Icons";
 
 export default function ConfigScreen() {
 
+    const [colorScheme, setColorScheme] = useState(null);
+
+    useEffect(() => {
+        AsyncStorage.getItem('isDarkMode').then((value) => {
+            if (value == null || value == '0') {
+                setColorScheme('light');
+            } else {
+                setColorScheme('dark');
+            }
+        })
+    }, []);
+    useEffect(() => {
+        if (colorScheme === 'light' || colorScheme === null) {
+            AsyncStorage.setItem('isDarkMode', '0');
+            setColorScheme('light');
+        } else {
+            AsyncStorage.setItem('isDarkMode', '1');
+            setColorScheme('dark');
+        }
+    }, [colorScheme]);
+
     return (
-        <View style={container}>
-            <View style={{flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <Text style={Typography.body}>Configuration screen!</Text>
+        <ScrollView style={colorScheme === 'light' ? container : containerDarkMode}>
+            <Text style={colorScheme === 'light' ? [headerTitle, paragraph] : [headerTitleDarkMode, paragraph]}>Diseño</Text>
+            <View style={[paragraph, normalField]}>
+                <Text style={colorScheme === 'light' ? body : bodyDarkMode}>Tema: </Text>
+                <TouchableOpacity onPress={() => { colorScheme === 'dark' ? setColorScheme('light') : setColorScheme('dark') }} style={colorScheme === 'light' ? [linkIcon, button, { marginLeft: 10 }] : [linkIcon, buttonDarkMode, { marginLeft: 10 }]}>
+                    {colorScheme === 'light' ? <LightModeWhite /> : <DarkModeBlack />}
+                    <Text style={colorScheme === 'light' ? [bodyDarkMode, linkText] : [body, linkText]}>{colorScheme === 'light' ? 'Modo claro' : 'Modo oscuro'}</Text>
+                </TouchableOpacity>
             </View>
-        </View>
+            <View style={{ marginTop: '100%' }}>
+                <View style={{ marginTop: 45 }} />
+                <TouchableOpacity style={colorScheme === 'light' ? [centered, button] : [centered, buttonDarkMode]} onPress={() => { RNRestart.Restart() }}>
+                    <Text style={colorScheme === 'light' ? bodyInfoBoldDarkMode : bodyInfoBold}>Pulsar para aplicar los cambios</Text>
+                </TouchableOpacity>
+            </View>
+        </ScrollView>
     );
 }

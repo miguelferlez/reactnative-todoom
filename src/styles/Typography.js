@@ -10,6 +10,10 @@ export const headerList = {
     fontSize: headerListFontSize,
     fontFamily: 'VeniceClassic',
 }
+export const headerListDarkMode = {
+    ...headerList,
+    color: Color.white,
+}
 export const headerOnboarding = {
     color: Color.blackRaisin,
     fontSize: headerTitleFontSize,
@@ -20,10 +24,18 @@ export const headerTitle = {
     fontSize: headerTitleFontSize,
     fontFamily: 'VeniceClassic',
 }
+export const headerTitleDarkMode = {
+    ...headerTitle,
+    color: Color.white,
+}
 export const body = {
     color: Color.blackRaisin,
     fontSize: bodyFontSize,
     fontFamily: 'ZillaSlab-Medium',
+}
+export const bodyDarkMode = {
+    ...body,
+    color: Color.white,
 }
 export const bodyInfo = {
     textAlign: 'justify',
@@ -31,18 +43,21 @@ export const bodyInfo = {
     fontSize: bodyInfoFontSize,
     fontFamily: 'ZillaSlab-Medium',
 }
+export const bodyInfoDarkMode = {
+    ...bodyInfo,
+    color: Color.white,
+}
 export const bodyInfoBold = {
     color: Color.blackRaisin,
     fontSize: bodyInfoFontSize,
     fontFamily: 'ZillaSlab-Bold',
 }
+export const bodyInfoBoldDarkMode = {
+    ...bodyInfoBold,
+    color: Color.white,
+}
 export const bodyInfoItalic = {
     fontFamily: 'ZillaSlab-Italic',
-}
-export const footer = {
-    color: Color.blackRaisin,
-    fontSize: bodyFontSize,
-    fontFamily: 'ZillaSlab-Medium',
 }
 export const error = {
     color: Color.roseFiery,
