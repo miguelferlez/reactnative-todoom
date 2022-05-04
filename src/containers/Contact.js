@@ -6,12 +6,10 @@ import { MailBlack, MailWhite, PhoneBlack, PhoneWhite, TwitterBlack, TwitterWhit
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function ContactScreen() {
-
     const [isLoading, setIsLoading] = useState(true);
     const [colorScheme, setColorScheme] = useState(null);
 
     useEffect(() => {
-        setIsLoading(true);
         AsyncStorage.getItem('isDarkMode').then((value) => {
             if (value == null || value == '0') {
                 setColorScheme('light');
@@ -19,13 +17,13 @@ export default function ContactScreen() {
                 setColorScheme('dark');
             }
             setIsLoading(false);
-        })
+        });
     }, []);
 
     if (isLoading) {
         return (
-            <View style={colorScheme === 'dark' ? [container,centered] : [containerDarkMode,centered]}>
-                <Text style={colorScheme === 'light' ? bodyDarkMode : body}>Cargando...</Text>
+            <View style={colorScheme === 'light' ? [container,centered] : [containerDarkMode,centered]}>
+                <Text style={colorScheme === 'light' ? body : bodyDarkMode}>Cargando...</Text>
             </View>
         );
     } else {

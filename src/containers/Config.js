@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { View, ScrollView, Text, TouchableOpacity } from "react-native";
 import { paragraph, container, containerDarkMode, centered, normalField, linkIcon, linkText, button, buttonDarkMode } from "../styles/Containers";
-import { headerTitle, headerTitleDarkMode, body, bodyDarkMode, bodyInfoBold, bodyInfoBoldDarkMode } from "../styles/Typography";
+import { headerTitle, headerTitleDarkMode, body, bodyDarkMode } from "../styles/Typography";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import RNRestart from 'react-native-restart';
 import { DarkModeWhite, DarkModeBlack, LightModeWhite, LightModeBlack } from "../styles/Icons";
 
 export default function ConfigScreen() {
-
     const [isLoading, setIsLoading] = useState(true);
     const [colorScheme, setColorScheme] = useState(null);
 
     useEffect(() => {
-        setIsLoading(true);
         AsyncStorage.getItem('isDarkMode').then((value) => {
             if (value == null || value == '0') {
                 setColorScheme('light');
@@ -22,6 +20,7 @@ export default function ConfigScreen() {
             setIsLoading(false);
         })
     }, []);
+
     useEffect(() => {
         if (colorScheme === 'light' || colorScheme === null) {
             AsyncStorage.setItem('isDarkMode', '0');
@@ -34,8 +33,8 @@ export default function ConfigScreen() {
 
     if (isLoading) {
         return (
-            <View style={colorScheme === 'dark' ? [container,centered] : [containerDarkMode,centered]}>
-                <Text style={colorScheme === 'light' ? bodyDarkMode : body}>Cargando...</Text>
+            <View style={colorScheme === 'light' ? [container,centered] : [containerDarkMode,centered]}>
+                <Text style={colorScheme === 'light' ? body : bodyDarkMode}>Cargando...</Text>
             </View>
         );
     } else {

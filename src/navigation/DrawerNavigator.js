@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Appearance } from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import OnboardingScreen from '../containers/Onboarding'
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -44,8 +44,8 @@ export default function DrawerNavigator() {
 
     if (isLoading) {
         return (
-            <View style={colorScheme === 'dark' ? [container, centered] : [containerDarkMode, centered]}>
-                <Text style={colorScheme === 'light' ? bodyDarkMode : body}>Cargando...</Text>
+            <View style={colorScheme === 'light' ? [container, centered] : [containerDarkMode, centered]}>
+                <Text style={colorScheme === 'light' ? body : bodyDarkMode}>Cargando...</Text>
             </View>
         );
     } else if (!isDrawerVisible && onboardingShown === 0) {
