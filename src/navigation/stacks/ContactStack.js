@@ -11,7 +11,7 @@ const Stack = createNativeStackNavigator();
 
 export default function ContactStack({ navigation }) {
 
-    const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
+    const [colorScheme, setColorScheme] = useState(null);
     
     useEffect(() => {
         AsyncStorage.getItem('isDarkMode').then((value) => {

@@ -11,7 +11,7 @@ const Stack = createNativeStackNavigator();
 
 export default function AboutStack({ navigation }) {
 
-    const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
+    const [colorScheme, setColorScheme] = useState(null);
     useEffect(() => {
         AsyncStorage.getItem('isDarkMode').then((value) => {
             if (value == null || value == '0') {
