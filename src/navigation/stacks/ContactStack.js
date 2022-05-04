@@ -1,18 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ContactScreen from '../../containers/Contact';
 import * as Color from '../../styles/Colors';
-import { headerTitle } from '../../styles/Typography';
-import { TouchableOpacity } from 'react-native';
+import { headerTitle, headerTitleDarkMode } from '../../styles/Typography';
+import { TouchableOpacity, Appearance } from 'react-native';
 import { BackBlack, BackWhite, DropDownBlack, DropDownWhite } from '../../styles/Icons';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createNativeStackNavigator();
 
 export default function ContactStack({ navigation }) {
+
+    const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
+    
+    useEffect(() => {
+        AsyncStorage.getItem('isDarkMode').then((value) => {
+            if (value == null || value == '0') {
+                setColorScheme('light');
+            } else {
+                setColorScheme('dark');
+            }
+        })
+    }, [colorScheme]);
+
     return (
         <Stack.Navigator>
             <Stack.Screen name="Contáctanos" component={ContactScreen} 
-                options={{
+                options={colorScheme === 'light' ? {
                     headerTitleAlign: 'center', 
                     headerStyle: { 
                         backgroundColor: Color.white 
@@ -35,7 +49,32 @@ export default function ContactStack({ navigation }) {
                             </TouchableOpacity>
                         );
                     },                  
-                }} 
+                } :
+                {
+                    headerTitleAlign: 'center', 
+                    headerStyle: { 
+                        backgroundColor: Color.blackRaisin 
+                    }, 
+                    headerTitleStyle: {
+                        ...headerTitleDarkMode,
+                    },
+                    headerShadowVisible: false,
+                    headerLeft: () => {
+                        return (
+                            <TouchableOpacity onPress={() => navigation.navigate('Mis tareas')}>
+                                <BackWhite />
+                            </TouchableOpacity>
+                        );
+                    },
+                    headerRight: () => {
+                        return (
+                            <TouchableOpacity onPress={() => navigation.openDrawer()}>
+                                <DropDownWhite />
+                            </TouchableOpacity>
+                        );
+                    }, 
+                }
+            } 
             />
         </Stack.Navigator>
     )
