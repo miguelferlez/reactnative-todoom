@@ -1,5 +1,6 @@
 export const black = '#000000';
 export const blackRaisin = '#2E2E38';
+export const blackSpace = '#1C1C22'
 export const blueAero = '#82BCE8';
 export const blueYinmin = '#374C8B';
 export const greyLight = '#CBCBCB'
