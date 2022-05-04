@@ -8,15 +8,18 @@ import { DarkModeWhite, DarkModeBlack, LightModeWhite, LightModeBlack } from "..
 
 export default function ConfigScreen() {
 
+    const [isLoading, setIsLoading] = useState(true);
     const [colorScheme, setColorScheme] = useState(null);
 
     useEffect(() => {
+        setIsLoading(true);
         AsyncStorage.getItem('isDarkMode').then((value) => {
             if (value == null || value == '0') {
                 setColorScheme('light');
             } else {
                 setColorScheme('dark');
             }
+            setIsLoading(false);
         })
     }, []);
     useEffect(() => {
@@ -29,22 +32,24 @@ export default function ConfigScreen() {
         }
     }, [colorScheme]);
 
-    return (
-        <ScrollView style={colorScheme === 'light' ? container : containerDarkMode}>
-            <Text style={colorScheme === 'light' ? [headerTitle, paragraph] : [headerTitleDarkMode, paragraph]}>Diseño</Text>
-            <View style={[paragraph, normalField]}>
-                <Text style={colorScheme === 'light' ? body : bodyDarkMode}>Tema: </Text>
-                <TouchableOpacity onPress={() => { colorScheme === 'dark' ? setColorScheme('light') : setColorScheme('dark') }} style={colorScheme === 'light' ? [linkIcon, button, { marginLeft: 10 }] : [linkIcon, buttonDarkMode, { marginLeft: 10 }]}>
-                    {colorScheme === 'light' ? <LightModeWhite /> : <DarkModeBlack />}
-                    <Text style={colorScheme === 'light' ? [bodyDarkMode, linkText] : [body, linkText]}>{colorScheme === 'light' ? 'Modo claro' : 'Modo oscuro'}</Text>
-                </TouchableOpacity>
+    if (isLoading) {
+        return (
+            <View style={colorScheme === 'dark' ? [container,centered] : [containerDarkMode,centered]}>
+                <Text style={colorScheme === 'light' ? bodyDarkMode : body}>Cargando...</Text>
             </View>
-            <View style={{ marginTop: '100%' }}>
-                <View style={{ marginTop: 45 }} />
-                <TouchableOpacity style={colorScheme === 'light' ? [centered, button] : [centered, buttonDarkMode]} onPress={() => { RNRestart.Restart() }}>
-                    <Text style={colorScheme === 'light' ? bodyInfoBoldDarkMode : bodyInfoBold}>Pulsar para aplicar los cambios</Text>
-                </TouchableOpacity>
-            </View>
-        </ScrollView>
-    );
+        );
+    } else {
+        return (
+            <ScrollView style={colorScheme === 'light' ? container : containerDarkMode}>
+                <Text style={colorScheme === 'light' ? [headerTitle, paragraph] : [headerTitleDarkMode, paragraph]}>Diseño</Text>
+                <View style={[paragraph, normalField]}>
+                    <Text style={colorScheme === 'light' ? body : bodyDarkMode}>Tema: </Text>
+                    <TouchableOpacity onPress={() => {setIsLoading(true); colorScheme === 'dark' ? setColorScheme('light') : setColorScheme('dark');RNRestart.Restart(); }} style={colorScheme === 'light' ? [linkIcon, button, { marginLeft: 10 }] : [linkIcon, buttonDarkMode, { marginLeft: 10 }]}>
+                        {colorScheme === 'light' ? <LightModeWhite /> : <DarkModeBlack />}
+                        <Text style={colorScheme === 'light' ? [bodyDarkMode, linkText] : [body, linkText]}>{colorScheme === 'light' ? 'Modo claro' : 'Modo oscuro'}</Text>
+                    </TouchableOpacity>
+                </View>
+            </ScrollView>
+        );
+    }
 }
