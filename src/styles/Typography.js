@@ -33,9 +33,17 @@ export const body = {
     fontSize: bodyFontSize,
     fontFamily: 'ZillaSlab-Medium',
 }
+export const subBody = {
+    ...body,
+    color: Color.greyLight,
+}
 export const bodyDarkMode = {
     ...body,
     color: Color.white,
+}
+export const subBodyDarkMode = {
+    ...body,
+    color: Color.greyScript,
 }
 export const bodyInfo = {
     textAlign: 'justify',

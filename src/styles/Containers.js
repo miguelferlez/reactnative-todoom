@@ -16,8 +16,7 @@ export const centered = {
     justifyContent: 'center',
 }
 export const beginning = {
-    flex: 1,
-    alignItems: 'center',
+    ...centered,
     alignSelf: 'flex-start',
     justifyContent: 'center',
 }
@@ -33,6 +32,11 @@ export const containerDarkMode = {
 }
 export const paragraph = {
     marginBottom: 20,
+}
+export const paragraphTask = {
+    ...paragraph,
+    flexDirection: 'row',
+    alignItems: 'center',
 }
 export const linkIcon = {
     flexDirection: 'row',
@@ -52,8 +56,39 @@ export const button = {
     borderRadius: 20,
 }
 export const buttonDarkMode = {
+    ...button,
     backgroundColor: Color.white,
-    padding: 10,
-    borderRadius: 20,
 }
+export const buttonDisabled = {
+    ...button,
+    backgroundColor:Color.greyLight,
+}
+export const buttonDisabledDarkMode = {
+    ...button,
+    backgroundColor:Color.greyScript,
+}
+export const addButton = {
+    backgroundColor: Color.blackRaisin,
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+}
+export const addButtonDarkMode = {
+    ...addButton,
+    backgroundColor: Color.white,
+}
+export const taskTextInput = {
+    ...Typography.body,
+    textAlignVertical: 'center',
+    padding: 0,
+    width: '80%',
+    borderBottomWidth: 1,
+    borderBottomColor: Color.greyLight,
+    marginLeft: 8,
+}
+export const taskTextInputDarkMode = {
+    ...taskTextInput,
+    ...Typography.bodyDarkMode,
+    borderBottomColor: Color.greyScript,
 
+}
