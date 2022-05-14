@@ -37,6 +37,7 @@ export const paragraphTask = {
     ...paragraph,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between'
 }
 export const linkIcon = {
     flexDirection: 'row',
