@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, FlatList, TouchableOpacity, RefreshControl } from "react-native";
+import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import { button, buttonDarkMode, centered, container, containerDarkMode, paragraph, addButton, addButtonDarkMode } from "../styles/Containers";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { body, bodyDarkMode, headerList, headerListDarkMode } from "../styles/Typography";
-import { tasks } from "./ListData";
 import CheckBox from "../styles/CheckBox";
+import { setTaskReducer } from "../data/TaskSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function ListTaskScreen({ navigation, route }) {
 
@@ -12,37 +13,8 @@ export default function ListTaskScreen({ navigation, route }) {
     const [taskHidden, setTaskHidden] = useState(false);
     const [colorScheme, setColorScheme] = useState(null);
     const [refreshing, setRefreshing] = useState(false);
-    const [taskDateHeader, setTaskDateHeader] = useState([]);
-
-    // const checkDate = (item) => {
-    //     var flag = false;
-    //     for(let i = 0; i < tasks.length; i++){
-    //         console.log('taks['+i+'].date:',tasks[i].date);
-    //         console.log('item:',item);
-    //         if(i === 0){
-    //             continue;
-    //         }
-    //         else if(item === tasks[i].date){
-    //             flag = true;
-    //             break;
-    //         }else{
-    //             flag = false;
-    //         }
-    //     }
-    //     console.log('flag:',flag);
-    //     if(flag === true){
-    //         return true;
-    //     }else{
-    //         return false;
-    //     }
-    // }
-
-    const hideTask = () => {
-        if (taskHidden) {
-            setTaskHidden(false);
-        }
-        setTaskHidden(!taskHidden);
-    };
+    const taskStored = useSelector(state => state.taskArray.taskArray);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         AsyncStorage.getItem('isDarkMode').then((value) => {
@@ -53,7 +25,25 @@ export default function ListTaskScreen({ navigation, route }) {
             }
             setIsLoading(false);
         });
+        const getTasks = async () => {
+            try{
+                const tasks = await AsyncStorage.getItem('task');
+                if(tasks !== null) {
+                    dispatch(setTaskReducer(JSON.parse(tasks)));
+                }
+            }catch (error) {
+                console.log(error);
+            }
+        }
+        getTasks();
     }, []);
+
+    const hideTask = () => {
+        if (taskHidden) {
+            setTaskHidden(false);
+        }
+        setTaskHidden(!taskHidden);
+    };
 
     if (isLoading) {
         return (
@@ -65,12 +55,12 @@ export default function ListTaskScreen({ navigation, route }) {
         return (
             <View style={colorScheme === 'light' ? container : containerDarkMode}>
                 <FlatList
-                    data={tasks.filter(item => taskHidden ? !item.isFinished : item)}
+                    data={taskStored.filter(item => taskHidden ? !item.isFinished : item)}
                     keyExtractor={ item => item.id }
                     renderItem={ ({item}) => 
                         <View>
                             <Text style={colorScheme === 'light' ? [headerList, paragraph] : [headerListDarkMode, paragraph]}>{item.date}</Text>
-                            <CheckBox checked={item.isFinished} text={item.text} hour={item.hour} /> 
+                            <CheckBox id={item.id} isFinished={item.isFinished} text={item.text} hour={item.hour} date={item.date} navigation={navigation} /> 
                         </View>
                     }
                     ListHeaderComponent={
@@ -78,7 +68,6 @@ export default function ListTaskScreen({ navigation, route }) {
                             <TouchableOpacity onPress={hideTask} style={colorScheme === 'light' ? [button,centered,paragraph] : [buttonDarkMode,centered,paragraph]}>
                                 <Text style={colorScheme === 'light' ? bodyDarkMode : body}>{taskHidden ? 'Mostrar todas las tareas completadas' : 'Ocultar todas las tareas completadas'}</Text>
                             </TouchableOpacity>
-                            {/* <Text style={colorScheme === 'light' ? [headerList, paragraph] : [headerListDarkMode, paragraph]}>Hoy</Text> */}
                         </View>
                     }   
                 />
@@ -87,6 +76,7 @@ export default function ListTaskScreen({ navigation, route }) {
                         <Text style={colorScheme === 'light' ? [headerListDarkMode,centered] : [headerList,centered]}>+</Text>
                     </TouchableOpacity>
                 </View>
+                {/* <View style={{marginBottom: 55}}/> */}
                 {/* <SectionList
                     sections={taskSection.reduce((result, sectionData) => {
                         const {title, data} = sectionData;
