@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
+import React, { useState, useEffect, useCallback } from "react";
+import { View, Text, FlatList, TouchableOpacity, RefreshControl } from "react-native";
 import { button, buttonDarkMode, centered, container, containerDarkMode, paragraph, addButton, addButtonDarkMode } from "../styles/Containers";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { body, bodyDarkMode, headerList, headerListDarkMode } from "../styles/Typography";
@@ -16,6 +16,24 @@ export default function ListTaskScreen({ navigation, route }) {
     const taskStored = useSelector(state => state.taskArray.taskArray);
     const dispatch = useDispatch();
 
+    const wait = (timeout) => { return new Promise(resolve => setTimeout(resolve, timeout)); }
+
+    const getTasks = async () => {
+        try{
+            const tasks = await AsyncStorage.getItem('task');
+            if(tasks !== null) {
+                dispatch(setTaskReducer(JSON.parse(tasks)));
+            }
+        }catch (error) {
+            console.log(error);
+        }
+    };
+
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+        wait(2000).then(() => setRefreshing(false), getTasks());
+    }, []);
+
     useEffect(() => {
         AsyncStorage.getItem('isDarkMode').then((value) => {
             if (value == null || value == '0') {
@@ -25,16 +43,6 @@ export default function ListTaskScreen({ navigation, route }) {
             }
             setIsLoading(false);
         });
-        const getTasks = async () => {
-            try{
-                const tasks = await AsyncStorage.getItem('task');
-                if(tasks !== null) {
-                    dispatch(setTaskReducer(JSON.parse(tasks)));
-                }
-            }catch (error) {
-                console.log(error);
-            }
-        }
         getTasks();
     }, []);
 
@@ -69,6 +77,9 @@ export default function ListTaskScreen({ navigation, route }) {
                                 <Text style={colorScheme === 'light' ? bodyDarkMode : body}>{taskHidden ? 'Mostrar todas las tareas completadas' : 'Ocultar todas las tareas completadas'}</Text>
                             </TouchableOpacity>
                         </View>
+                    }
+                    refreshControl={
+                        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
                     }   
                 />
                 <View style={{flex:1,position:'absolute',alignSelf:'flex-end',bottom: 22,paddingRight:22}}>
