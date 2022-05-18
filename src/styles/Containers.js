@@ -25,6 +25,7 @@ export const container = {
     width: '100%',
     height: '100%',
     padding: 22,
+    paddingTop: 70,
 }
 export const containerDarkMode = {
     ...container,
