@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Appearance } from "react-native";
+import { View, Text } from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import OnboardingScreen from '../containers/Onboarding'
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { body, bodyDarkMode, headerList } from "../styles/Typography";
+import { body, bodyDarkMode } from "../styles/Typography";
 import * as Color from '../styles/Colors';
 import TaskStack from "./stacks/TaskStack";
 import CreateTaskStack from "./stacks/CreateTaskStack";
@@ -25,6 +25,13 @@ export default function DrawerNavigator() {
     const [colorScheme, setColorScheme] = useState(null);
 
     useEffect(() => {
+        AsyncStorage.getItem('isDarkMode').then((value) => {
+            if (value == null || value == '0') {
+                setColorScheme('light');
+            } else {
+                setColorScheme('dark');
+            }
+        });
         AsyncStorage.getItem('onboardingShown').then((value) => {
             if (value == null || value == '0') {
                 setOnboardingShown(0);
@@ -32,14 +39,7 @@ export default function DrawerNavigator() {
                 setOnboardingShown(1);
             }
         });
-        AsyncStorage.getItem('isDarkMode').then((value) => {
-            if (value == null || value == '0') {
-                setColorScheme('light');
-            } else {
-                setColorScheme('dark');
-            }
-            setIsLoading(false);
-        });
+        setIsLoading(false);
     }, []);
 
     if (isLoading) {
@@ -55,12 +55,6 @@ export default function DrawerNavigator() {
     } else {
         if (colorScheme === 'light') {
             return (
-                // <View style={container}>
-                //     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                //         <Text style={{ fontFamily: 'VeniceClassic', color: 'rgb(46,46,56)', fontSize: 60 }}>Header</Text>
-                //         <Text style={{ fontFamily: 'ZillaSlab-Medium', color: 'rgb(46,46,56)', fontSize: 18 }}>Body sample text</Text>
-                //     </View>
-                // </View>
                 <Drawer.Navigator drawerPosition="left"
                     screenOptions={{
                         drawerContentStyle: {

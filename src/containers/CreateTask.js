@@ -23,6 +23,54 @@ export default function CreateTaskScreen({ navigation }) {
     const taskStored = useSelector(state => state.taskArray.taskArray);
     const today = new Date();
 
+    useEffect(() => {
+        AsyncStorage.getItem('isDarkMode').then((value) => {
+            if (value == null || value == '0') {
+                setColorScheme('light');
+            } else {
+                setColorScheme('dark');
+            }
+        }).then(setIsLoading(false));
+    }, []);
+
+    useEffect(() => {
+        if(!text.trim()) {
+            setIsSaveButtonDisabled(true);
+        }else{
+            setIsSaveButtonDisabled(false);
+        }
+    },[text]);
+
+    //Hour
+    const showHourPicker = () => {
+        setIsHourPickerVisible(true);
+    };
+
+    const hideHourPicker = () => {
+        setIsHourPickerVisible(false);
+    };
+
+    const handleConfirmHour = (hour) => {
+        setHour(hour);
+        hideHourPicker();
+        hideDatePicker();
+    };
+
+    //Date
+    const showDatePicker = () => {
+        setIsDatePickerVisible(true);
+    };
+
+    const hideDatePicker = () => {
+        setIsDatePickerVisible(false);
+    };
+
+    const handleConfirmDate = (date) => {
+        setDate(date);
+        hideHourPicker();
+        hideDatePicker();
+    };
+
     const createTask = async () => {
         const newTask = {
             id: Math.floor(Math.random()*1000),
@@ -39,57 +87,6 @@ export default function CreateTaskScreen({ navigation }) {
             console.log(error);
         }
     }
-
-    const showHourPicker = () => {
-        setIsHourPickerVisible(true);
-    };
-
-    const hideHourPicker = () => {
-        setIsHourPickerVisible(false);
-    };
-
-    const showDatePicker = () => {
-        setIsDatePickerVisible(true);
-    };
-
-    const hideDatePicker = () => {
-        setIsDatePickerVisible(false);
-    };
-
-    const handleConfirmDate = (date) => {
-        setDate(date);
-        hideHourPicker();
-        hideDatePicker();
-    };
-
-    const handleConfirmHour = (hour) => {
-        setHour(hour);
-        hideHourPicker();
-        hideDatePicker();
-    };
-
-    useEffect(() => {
-        console.log('new date:',date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear());
-    },[date])
-
-    useEffect(() => {
-        if(!text.trim()) {
-            setIsSaveButtonDisabled(true);
-        }else{
-            setIsSaveButtonDisabled(false);
-        }
-    },[text])
-
-    useEffect(() => {
-        AsyncStorage.getItem('isDarkMode').then((value) => {
-            if (value == null || value == '0') {
-                setColorScheme('light');
-            } else {
-                setColorScheme('dark');
-            }
-            setIsLoading(false);
-        });
-    }, []);
 
     if (isLoading) {
         return (
