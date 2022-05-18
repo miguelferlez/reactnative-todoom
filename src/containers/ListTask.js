@@ -15,20 +15,8 @@ export default function ListTaskScreen({ navigation, route }) {
     const [refreshing, setRefreshing] = useState(false);
     const taskStored = useSelector(state => state.taskArray.taskArray);
     const dispatch = useDispatch();
-
     const wait = (timeout) => { return new Promise(resolve => setTimeout(resolve, timeout)); }
-
-    const getTasks = async () => {
-        try{
-            const tasks = await AsyncStorage.getItem('task');
-            if(tasks !== null) {
-                dispatch(setTaskReducer(JSON.parse(tasks)));
-            }
-        }catch (error) {
-            console.log(error);
-        }
-    };
-
+    
     const onRefresh = useCallback(() => {
         setRefreshing(true);
         wait(2000).then(() => setRefreshing(false), getTasks());
@@ -41,10 +29,20 @@ export default function ListTaskScreen({ navigation, route }) {
             } else {
                 setColorScheme('dark');
             }
-            setIsLoading(false);
-        });
+        }).then(setIsLoading(false));
         getTasks();
     }, []);
+
+    const getTasks = async () => {
+        try{
+            const tasks = await AsyncStorage.getItem('task');
+            if(tasks !== null) {
+                dispatch(setTaskReducer(JSON.parse(tasks)));
+            }
+        }catch (error) {
+            console.log(error);
+        }
+    };    
 
     const hideTask = () => {
         if (taskHidden) {
@@ -83,43 +81,10 @@ export default function ListTaskScreen({ navigation, route }) {
                     }   
                 />
                 <View style={{flex:1,position:'absolute',alignSelf:'flex-end',bottom: 22,paddingRight:22}}>
-                    <TouchableOpacity onPress={() => navigation.navigate('CreateTask')} style={colorScheme === 'light' ? addButton : addButtonDarkMode}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Añadir tareas')} style={colorScheme === 'light' ? addButton : addButtonDarkMode}>
                         <Text style={colorScheme === 'light' ? [headerListDarkMode,centered] : [headerList,centered]}>+</Text>
                     </TouchableOpacity>
                 </View>
-                {/* <View style={{marginBottom: 55}}/> */}
-                {/* <SectionList
-                    sections={taskSection.reduce((result, sectionData) => {
-                        const {title, data} = sectionData;
-                        const filteredData = data.filter(item => taskHidden ? !item.isFinished : item);
-                        if (filteredData.length !== 0) {
-                            result.push({
-                                title,
-                                data: filteredData
-                            });
-                        }
-                        return result;
-                    }, [])}
-                    keyExtractor={ (item, index) => index.toString() }
-                    renderItem={ ({item}) =>
-                        <View>
-                            <CheckBox checked={item.isFinished} text={item.text} hour={item.hour} />
-                        </View>
-                    }
-                    renderSectionHeader={({ section: { title } }) => (<Text style={colorScheme === 'light' ? [headerList, paragraph] : [headerListDarkMode, paragraph]}>{title}</Text>)}
-                    ListHeaderComponent={ () => 
-                        <TouchableOpacity onPress={hideTask} style={colorScheme === 'light' ? [button,{alignSelf:'flex-end'}] : [buttonDarkMode,{alignSelf:'flex-end'}]}>
-                            <Text style={colorScheme === 'light' ? bodyDarkMode : body}>{taskHidden ? 'Mostrar tareas terminadas' : 'Ocultar tareas terminadas'}</Text>
-                        </TouchableOpacity>
-                    }
-                    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-                />
-                <View style={{flex:1,position:'absolute',alignSelf:'flex-end',bottom: 22,paddingRight:22}}>
-                    <TouchableOpacity onPress={() => navigation.navigate('CreateTask')} style={colorScheme === 'light' ? addButton : addButtonDarkMode}>
-                        <Text style={colorScheme === 'light' ? [headerListDarkMode,centered] : [headerList,centered]}>+</Text>
-                    </TouchableOpacity>
-                </View> */}
-
             </View>
         );
     }

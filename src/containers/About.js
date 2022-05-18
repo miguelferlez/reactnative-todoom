@@ -16,13 +16,12 @@ export default function AboutScreen() {
             } else {
                 setColorScheme('dark');
             }
-            setIsLoading(false);
-        })
+        }).then(setIsLoading(false));
     }, []);
 
     if (isLoading) {
         return (
-            <View style={colorScheme === 'light' ? [container,centered] : [containerDarkMode,centered]}>
+            <View style={colorScheme === 'light' ? [container, centered] : [containerDarkMode, centered]}>
                 <Text style={colorScheme === 'light' ? body : bodyDarkMode}>Cargando...</Text>
             </View>
         );

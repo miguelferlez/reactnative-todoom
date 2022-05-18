@@ -1,12 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { View, Text } from "react-native";
-import { centered, container, containerDarkMode } from "../styles/Containers";
+import { View, Text, TextInput, ScrollView, Touchable, TouchableOpacity, Switch } from "react-native";
+import { button, buttonDarkMode, buttonDisabled, buttonDisabledDarkMode, centered, container, containerDarkMode, normalField, paragraph, taskTextInput, taskTextInputDarkMode } from "../styles/Containers";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { body, bodyDarkMode } from "../styles/Typography";
+import { body, bodyDarkMode, subBody, subBodyDarkMode } from "../styles/Typography";
+import * as Color from '../styles/Colors';
+import DateTimePicker from "react-native-modal-datetime-picker";
+import { useDispatch, useSelector } from "react-redux";
+import { updateTaskReducer, deleteTaskReducer, editTaskReducer, addTaskReducer } from "../data/TaskSlice";
 
-export default function EditTaskScreen() {
+export default function EditTaskScreen({ navigation, route }) {
     const [isLoading, setIsLoading] = useState(true);
     const [colorScheme, setColorScheme] = useState(null);
+    const [id, setId] = useState(route.params.id);
+    const [text, setText] = useState(route.params.text);
+    const [hour, setHour] = useState(new Date());
+    const [hourText, setHourText] = useState(route.params.hour);
+    const [date, setDate] = useState(new Date());
+    const [dateText, setDateText] = useState(route.params.date);
+    const [isToday, setIsToday] = useState(false);
+    const [isHourPickerVisible, setIsHourPickerVisible] = useState(false);
+    const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
+    const [isSaveButtonDisabled, setIsSaveButtonDisabled] = useState(true);
+    const [isDatePickerDisabled, setIsDatePickerDisabled] = useState(false);
+    const dispatch = useDispatch();
+    const taskStored = useSelector(state => state.taskArray.taskArray);
+    const today = new Date();
 
     useEffect(() => {
         AsyncStorage.getItem('isDarkMode').then((value) => {
@@ -15,9 +33,52 @@ export default function EditTaskScreen() {
             } else {
                 setColorScheme('dark');
             }
-            setIsLoading(false);
-        });
+        }).then(setIsLoading(false));
     }, []);
+
+    useEffect(() => {
+        if(!text.trim()) {
+            setIsSaveButtonDisabled(true);
+        }else{
+            setIsSaveButtonDisabled(false);
+        }
+    },[text]);
+
+    //Hour
+    const showHourPicker = () => {
+        setIsHourPickerVisible(true);
+    };
+
+    const hideHourPicker = () => {
+        setIsHourPickerVisible(false);
+    };
+
+    const handleConfirmHour = (hour) => {
+        setHourText(hour.getMinutes() < 10 ? hour.getHours() < 10 ? '0' + hour.getHours() + ':0' + hour.getMinutes() : hour.getHours() + ':0' + hour.getMinutes() : hour.getHours() + ':' + hour.getMinutes())
+        setHour(hour);
+        hideHourPicker();
+        hideDatePicker();
+    };
+
+    //Date
+    const showDatePicker = () => {
+        setIsDatePickerVisible(true);
+    };
+
+    const hideDatePicker = () => {
+        setIsDatePickerVisible(false);
+    };
+
+    const handleConfirmDate = (date) => {
+        setDateText(date.getDate() === today.getDate() && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear() ? 'Hoy' : date.getDate() === today.getDate() + 1  && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear() ? 'Mañana' : date.getDate() + '/' + (date.getMonth()+1) + '/' + date.getFullYear());
+        setDate(date);
+        hideHourPicker();
+        hideDatePicker();
+    };
+
+    useEffect(() => {
+        console.log('new date:',date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear());
+    },[date]);
 
     if (isLoading) {
         return (
@@ -27,11 +88,59 @@ export default function EditTaskScreen() {
         );
     } else {
         return (
-            <View style={colorScheme === 'light' ? container : containerDarkMode}>
-                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                    <Text style={colorScheme === 'light' ? body : bodyDarkMode}>Edit task screen!</Text>
+            <ScrollView style={colorScheme === 'light' ? container : containerDarkMode}>
+                <View style={[paragraph, normalField]}>
+                    <Text style={colorScheme === 'light' ? body : bodyDarkMode}>Título: </Text>
+                    <TextInput
+                        style={colorScheme === 'light' ? taskTextInput : taskTextInputDarkMode}
+                        value={text}
+                        placeholder="Escribe lo que tengas pendiente"
+                        placeholderTextColor={colorScheme === 'light' ? Color.greyLight : Color.greyScript}
+                        onChangeText={(value) => setText(value)}
+                        
+                    />
                 </View>
-            </View>
+                <View style={[paragraph, normalField]}>
+                    <Text style={colorScheme === 'light' ? body : bodyDarkMode}>¿A qué hora? </Text>
+                    <TouchableOpacity onPress={showHourPicker} style={colorScheme === 'light' ? [button,{flex:1,marginLeft:15}] : [buttonDarkMode,{flex:1,marginLeft:15}] }>
+                        <Text style={colorScheme === 'light' ? bodyDarkMode : body}>{hourText}</Text>
+                    </TouchableOpacity>
+                    <DateTimePicker
+                        isVisible={isHourPickerVisible}
+                        value={hour}
+                        mode={'time'}
+                        is24Hour={true}
+                        onConfirm={handleConfirmHour}
+                        onCancel={hideHourPicker}
+                    />
+                </View>
+                <View style={[paragraph, normalField]}>
+                    <Text style={colorScheme === 'light' ? body : bodyDarkMode}>¿Para hoy?</Text>
+                    <Switch
+                        value={isToday}
+                        onValueChange={(value) => {setIsToday(value),setIsDatePickerDisabled(value)}}
+                        trackColor={{true:colorScheme==='light'?Color.greyLight:Color.greyScript, false: colorScheme==='light'?Color.blackRaisin:Color.white}}
+                        thumbColor={Color.white}
+                        style={{marginLeft:15, transform:[{ scale: 1.5 }]}}   
+                    />
+                </View>
+                <View style={[paragraph, normalField]}>
+                    <Text style={colorScheme === 'light' ? isDatePickerDisabled ? subBody : body : isDatePickerDisabled ? subBodyDarkMode : bodyDarkMode}>Fecha: </Text>
+                    <TouchableOpacity disabled={isDatePickerDisabled} onPress={showDatePicker} style={colorScheme === 'light' ? isDatePickerDisabled ? [buttonDisabled,{flex:1,marginLeft:15}] : [button,{flex:1,marginLeft:15}] : isDatePickerDisabled ? [buttonDisabledDarkMode,{flex:1,marginLeft:15}] : [buttonDarkMode,{flex:1,marginLeft:15}] }>
+                        <Text style={colorScheme === 'light' ? bodyDarkMode : body}>{dateText}</Text>
+                    </TouchableOpacity>
+                    <DateTimePicker
+                        isVisible={isDatePickerVisible}
+                        value={date}
+                        mode={'date'}
+                        onConfirm={handleConfirmDate}
+                        onCancel={hideDatePicker}
+                    />
+                </View>
+                <TouchableOpacity onPress={updateTask} disabled={!text} style={colorScheme === 'light' ? isSaveButtonDisabled ? [centered,buttonDisabled,{marginTop: 10, width: '100%'}] : [centered,button,{marginTop: 10, width: '100%'}] : isDatePickerDisabled ? [centered,buttonDisabledDarkMode,{marginTop: 10, width: '100%'}] : [centered,buttonDarkMode,{marginTop: 10, width: '100%'}]} >
+                    <Text style={colorScheme === 'light' ? bodyDarkMode : body}>Guardar tarea</Text>
+                </TouchableOpacity>
+            </ScrollView>
         );
     }
 }
