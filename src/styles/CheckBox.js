@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Color from './Colors';
 import { paragraphTask } from './Containers';
 import { body, bodyDarkMode, subBody, subBodyDarkMode } from './Typography';
-import { deleteTaskReducer, updateTaskReducer } from '../data/TaskSlice';
+import { deleteTaskReducer, editTaskReducer, updateTaskReducer } from '../data/TaskSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import { MenuTaskBlack, MenuTaskWhite } from './Icons';
@@ -41,6 +41,21 @@ export default function CheckBox({ id, isFinished, text, hour, date, navigation 
             console.log(error);
         }
     }
+    // const setIsEdited = async () => {
+    //     try{
+    //         dispatch(editTaskReducer({id, text, hour, date, isFinished}));
+    //         AsyncStorage.setItem('task', JSON.stringify(
+    //             taskStored.map(item => {
+    //                 if (item.id === id) {
+    //                     return {...taskStored, id: id, isFinished: isFinished, text: text, hour: hour}
+    //                 }
+    //                 return item;
+    //             })
+    //         ));
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }
 
     useEffect(() => {
         AsyncStorage.getItem('isDarkMode').then((value) => {
@@ -67,12 +82,12 @@ export default function CheckBox({ id, isFinished, text, hour, date, navigation 
                     <Text style={colorScheme === 'light' ? isFinished ? [subBody,{textDecorationLine:'line-through'}] : subBody : isFinished ? [subBodyDarkMode,{textDecorationLine:'line-through'}] : subBodyDarkMode}>{hour}</Text>
                 </View>
             </View>
-            <View style={{marginRight: 0, width:'20%'}}>
+            <View style={{marginRight: 0, width:'28%'}}>
                 <Menu>
                     <MenuTrigger>
                         { colorScheme === 'light' ? <MenuTaskBlack /> : <MenuTaskWhite /> }
                     </MenuTrigger>
-                    <MenuOptions style={colorScheme === 'light' ? {backgroundColor:Color.white} : {backgroundColor:Color.blackRaisin}}>
+                    <MenuOptions style={colorScheme === 'light' ? {backgroundColor:Color.white, padding:10} : {backgroundColor:Color.blackRaisin, padding:10}}>
                         <MenuOption onSelect={() => navigation.navigate('Editar tareas', {
                             text: text,
                             hour: hour,

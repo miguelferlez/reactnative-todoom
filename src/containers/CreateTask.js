@@ -143,7 +143,7 @@ export default function CreateTaskScreen({ navigation }) {
                         onCancel={hideDatePicker}
                     />
                 </View>
-                <TouchableOpacity onPress={createTask} disabled={!text} style={colorScheme === 'light' ? isSaveButtonDisabled ? [centered,buttonDisabled,{marginTop: 10, width: '100%'}] : [centered,button,{marginTop: 10, width: '100%'}] : isDatePickerDisabled ? [centered,buttonDisabledDarkMode,{marginTop: 10, width: '100%'}] : [centered,buttonDarkMode,{marginTop: 10, width: '100%'}]} >
+                <TouchableOpacity onPress={createTask} disabled={!text} style={colorScheme === 'light' ? isSaveButtonDisabled ? [centered,buttonDisabled,{marginTop: 10, width: '100%'}] : [centered,button,{marginTop: 10, width: '100%'}] : isSaveButtonDisabled ? [centered,buttonDisabledDarkMode,{marginTop: 10, width: '100%'}] : [centered,buttonDarkMode,{marginTop: 10, width: '100%'}]} >
                     <Text style={colorScheme === 'light' ? bodyDarkMode : body}>Guardar tarea</Text>
                 </TouchableOpacity>
             </ScrollView>
