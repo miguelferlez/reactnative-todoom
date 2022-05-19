@@ -28,9 +28,20 @@ export const TaskSlice = createSlice({
         },
         hideFinishedTask:(state) => {
             state.taskArray = state.taskArray.filter(item => !item.isFinished);
-        }
+        },
+        editTaskReducer:(state, action) => {
+            state.taskArray = state.taskArray.map(task => {
+                if (task.id === action.payload.id) {
+                    return {
+                        ...task,
+                        item: action.payload.item
+                    };
+                }
+                return task
+            })
+        },
     }
 });
 
-export const {setTaskReducer, updateTaskReducer, addTaskReducer, deleteTaskReducer, hideFinishedTask} = TaskSlice.actions;
+export const {setTaskReducer, updateTaskReducer, addTaskReducer, deleteTaskReducer, hideFinishedTask, editTaskReducer} = TaskSlice.actions;
 export default TaskSlice.reducer;

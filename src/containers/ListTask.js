@@ -7,7 +7,7 @@ import CheckBox from "../styles/CheckBox";
 import { setTaskReducer } from "../data/TaskSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-export default function ListTaskScreen({ navigation, route }) {
+export default function ListTaskScreen({ navigation }) {
 
     const [isLoading, setIsLoading] = useState(true);
     const [taskHidden, setTaskHidden] = useState(false);
@@ -19,7 +19,7 @@ export default function ListTaskScreen({ navigation, route }) {
     
     const onRefresh = useCallback(() => {
         setRefreshing(true);
-        wait(2000).then(() => setRefreshing(false), getTasks());
+        wait(3000).then(() => setRefreshing(false), getTasks());
     }, []);
 
     useEffect(() => {
@@ -29,7 +29,8 @@ export default function ListTaskScreen({ navigation, route }) {
             } else {
                 setColorScheme('dark');
             }
-        }).then(setIsLoading(false));
+        });
+        setIsLoading(false);
         getTasks();
     }, []);
 

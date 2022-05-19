@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AboutScreen from '../../containers/About';
-import * as Color from '../../styles/Colors';
 import { body, bodyDarkMode, headerTitle, headerTitleDarkMode } from '../../styles/Typography';
 import { TouchableOpacity, View, Text } from 'react-native';
 import { BackBlack, BackWhite, DropDownBlack, DropDownWhite } from '../../styles/Icons';
