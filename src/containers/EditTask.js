@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TextInput, ScrollView, Touchable, TouchableOpacity, Switch } from "react-native";
+import { View, Text, TextInput, ScrollView, TouchableOpacity, Switch } from "react-native";
 import { button, buttonDarkMode, buttonDisabled, buttonDisabledDarkMode, centered, container, containerDarkMode, normalField, paragraph, taskTextInput, taskTextInputDarkMode } from "../styles/Containers";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { body, bodyDarkMode, subBody, subBodyDarkMode } from "../styles/Typography";
 import * as Color from '../styles/Colors';
 import DateTimePicker from "react-native-modal-datetime-picker";
 import { useDispatch, useSelector } from "react-redux";
-import { updateTaskReducer, deleteTaskReducer, editTaskReducer, addTaskReducer } from "../data/TaskSlice";
+import { addTaskReducer } from "../data/TaskSlice";
 
 export default function EditTaskScreen({ navigation, route }) {
     const [isLoading, setIsLoading] = useState(true);
     const [colorScheme, setColorScheme] = useState(null);
-    const [id, setId] = useState(route.params.id);
     const [text, setText] = useState(route.params.text);
     const [hour, setHour] = useState(new Date());
     const [hourText, setHourText] = useState(route.params.hour);
@@ -33,16 +32,17 @@ export default function EditTaskScreen({ navigation, route }) {
             } else {
                 setColorScheme('dark');
             }
-        }).then(setIsLoading(false));
+        })
+        setIsLoading(false);
     }, []);
 
     useEffect(() => {
-        if(!text.trim()) {
+        if (!text.trim()) {
             setIsSaveButtonDisabled(true);
-        }else{
+        } else {
             setIsSaveButtonDisabled(false);
         }
-    },[text]);
+    }, [text]);
 
     //Hour
     const showHourPicker = () => {
@@ -70,19 +70,32 @@ export default function EditTaskScreen({ navigation, route }) {
     };
 
     const handleConfirmDate = (date) => {
-        setDateText(date.getDate() === today.getDate() && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear() ? 'Hoy' : date.getDate() === today.getDate() + 1  && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear() ? 'Mañana' : date.getDate() + '/' + (date.getMonth()+1) + '/' + date.getFullYear());
+        setDateText(date.getDate() === today.getDate() && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear() ? 'Hoy' : date.getDate() === today.getDate() + 1 && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear() ? 'Mañana' : date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear());
         setDate(date);
         hideHourPicker();
         hideDatePicker();
     };
 
-    useEffect(() => {
-        console.log('new date:',date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear());
-    },[date]);
+    const updateTask = async () => {
+        const newTask = {
+            id: Math.floor(Math.random() * 1000),
+            text: text,
+            hour: hour.getMinutes() < 10 ? hour.getHours() < 10 ? '0' + hour.getHours() + ':0' + hour.getMinutes() : hour.getHours() + ':0' + hour.getMinutes() : hour.getHours() + ':' + hour.getMinutes(),
+            date: date.getDate() === today.getDate() && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear() ? 'Hoy' : date.getDate() === today.getDate() + 1 && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear() ? 'Mañana' : date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear(),
+            isFinished: false
+        }
+        try {
+            await AsyncStorage.setItem('task', JSON.stringify([...taskStored, newTask]));
+            dispatch(addTaskReducer(newTask));
+            navigation.navigate('Mis tareas');
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     if (isLoading) {
         return (
-            <View style={colorScheme === 'light' ? [container,centered] : [containerDarkMode,centered]}>
+            <View style={colorScheme === 'light' ? [container, centered] : [containerDarkMode, centered]}>
                 <Text style={colorScheme === 'light' ? body : bodyDarkMode}>Cargando...</Text>
             </View>
         );
@@ -97,12 +110,11 @@ export default function EditTaskScreen({ navigation, route }) {
                         placeholder="Escribe lo que tengas pendiente"
                         placeholderTextColor={colorScheme === 'light' ? Color.greyLight : Color.greyScript}
                         onChangeText={(value) => setText(value)}
-                        
                     />
                 </View>
                 <View style={[paragraph, normalField]}>
                     <Text style={colorScheme === 'light' ? body : bodyDarkMode}>¿A qué hora? </Text>
-                    <TouchableOpacity onPress={showHourPicker} style={colorScheme === 'light' ? [button,{flex:1,marginLeft:15}] : [buttonDarkMode,{flex:1,marginLeft:15}] }>
+                    <TouchableOpacity onPress={showHourPicker} style={colorScheme === 'light' ? [button, { flex: 1, marginLeft: 15 }] : [buttonDarkMode, { flex: 1, marginLeft: 15 }]}>
                         <Text style={colorScheme === 'light' ? bodyDarkMode : body}>{hourText}</Text>
                     </TouchableOpacity>
                     <DateTimePicker
@@ -118,15 +130,15 @@ export default function EditTaskScreen({ navigation, route }) {
                     <Text style={colorScheme === 'light' ? body : bodyDarkMode}>¿Para hoy?</Text>
                     <Switch
                         value={isToday}
-                        onValueChange={(value) => {setIsToday(value),setIsDatePickerDisabled(value)}}
-                        trackColor={{true:colorScheme==='light'?Color.greyLight:Color.greyScript, false: colorScheme==='light'?Color.blackRaisin:Color.white}}
+                        onValueChange={(value) => { setIsToday(value), setIsDatePickerDisabled(value) }}
+                        trackColor={{ true: colorScheme === 'light' ? Color.greyLight : Color.greyScript, false: colorScheme === 'light' ? Color.blackRaisin : Color.white }}
                         thumbColor={Color.white}
-                        style={{marginLeft:15, transform:[{ scale: 1.5 }]}}   
+                        style={{ marginLeft: 15, transform: [{ scale: 1.5 }] }}
                     />
                 </View>
                 <View style={[paragraph, normalField]}>
                     <Text style={colorScheme === 'light' ? isDatePickerDisabled ? subBody : body : isDatePickerDisabled ? subBodyDarkMode : bodyDarkMode}>Fecha: </Text>
-                    <TouchableOpacity disabled={isDatePickerDisabled} onPress={showDatePicker} style={colorScheme === 'light' ? isDatePickerDisabled ? [buttonDisabled,{flex:1,marginLeft:15}] : [button,{flex:1,marginLeft:15}] : isDatePickerDisabled ? [buttonDisabledDarkMode,{flex:1,marginLeft:15}] : [buttonDarkMode,{flex:1,marginLeft:15}] }>
+                    <TouchableOpacity disabled={isDatePickerDisabled} onPress={showDatePicker} style={colorScheme === 'light' ? isDatePickerDisabled ? [buttonDisabled, { flex: 1, marginLeft: 15 }] : [button, { flex: 1, marginLeft: 15 }] : isDatePickerDisabled ? [buttonDisabledDarkMode, { flex: 1, marginLeft: 15 }] : [buttonDarkMode, { flex: 1, marginLeft: 15 }]}>
                         <Text style={colorScheme === 'light' ? bodyDarkMode : body}>{dateText}</Text>
                     </TouchableOpacity>
                     <DateTimePicker
@@ -137,7 +149,7 @@ export default function EditTaskScreen({ navigation, route }) {
                         onCancel={hideDatePicker}
                     />
                 </View>
-                <TouchableOpacity onPress={updateTask} disabled={!text} style={colorScheme === 'light' ? isSaveButtonDisabled ? [centered,buttonDisabled,{marginTop: 10, width: '100%'}] : [centered,button,{marginTop: 10, width: '100%'}] : isDatePickerDisabled ? [centered,buttonDisabledDarkMode,{marginTop: 10, width: '100%'}] : [centered,buttonDarkMode,{marginTop: 10, width: '100%'}]} >
+                <TouchableOpacity onPress={updateTask} disabled={!text} style={colorScheme === 'light' ? isSaveButtonDisabled ? [centered, buttonDisabled, { marginTop: 10, width: '100%' }] : [centered, button, { marginTop: 10, width: '100%' }] : isDatePickerDisabled ? [centered, buttonDisabledDarkMode, { marginTop: 10, width: '100%' }] : [centered, buttonDarkMode, { marginTop: 10, width: '100%' }]} >
                     <Text style={colorScheme === 'light' ? bodyDarkMode : body}>Guardar tarea</Text>
                 </TouchableOpacity>
             </ScrollView>
