@@ -16,7 +16,7 @@ export default function ListTaskScreen({ navigation }) {
     const taskStored = useSelector(state => state.taskArray.taskArray);
     const dispatch = useDispatch();
     const wait = (timeout) => { return new Promise(resolve => setTimeout(resolve, timeout)); }
-    
+
     const onRefresh = useCallback(() => {
         setRefreshing(true);
         wait(3000).then(() => setRefreshing(false), getTasks());
@@ -35,15 +35,15 @@ export default function ListTaskScreen({ navigation }) {
     }, []);
 
     const getTasks = async () => {
-        try{
+        try {
             const tasks = await AsyncStorage.getItem('task');
-            if(tasks !== null) {
+            if (tasks !== null) {
                 dispatch(setTaskReducer(JSON.parse(tasks)));
             }
-        }catch (error) {
+        } catch (error) {
             console.log(error);
         }
-    };    
+    };
 
     const hideTask = () => {
         if (taskHidden) {
@@ -54,7 +54,7 @@ export default function ListTaskScreen({ navigation }) {
 
     if (isLoading) {
         return (
-            <View style={colorScheme === 'light' ? [container,centered] : [containerDarkMode,centered]}>
+            <View style={colorScheme === 'light' ? [container, centered] : [containerDarkMode, centered]}>
                 <Text style={colorScheme === 'light' ? body : bodyDarkMode}>Cargando...</Text>
             </View>
         );
@@ -63,27 +63,27 @@ export default function ListTaskScreen({ navigation }) {
             <View style={colorScheme === 'light' ? container : containerDarkMode}>
                 <FlatList
                     data={taskStored.filter(item => taskHidden ? !item.isFinished : item)}
-                    keyExtractor={ item => item.id }
-                    renderItem={ ({item}) => 
+                    keyExtractor={item => item.id}
+                    renderItem={({ item }) =>
                         <View>
                             <Text style={colorScheme === 'light' ? [headerList, paragraph] : [headerListDarkMode, paragraph]}>{item.date}</Text>
-                            <CheckBox id={item.id} isFinished={item.isFinished} text={item.text} hour={item.hour} date={item.date} navigation={navigation} /> 
+                            <CheckBox id={item.id} isFinished={item.isFinished} text={item.text} hour={item.hour} date={item.date} navigation={navigation} />
                         </View>
                     }
                     ListHeaderComponent={
                         <View>
-                            <TouchableOpacity onPress={hideTask} style={colorScheme === 'light' ? [button,centered,paragraph] : [buttonDarkMode,centered,paragraph]}>
+                            <TouchableOpacity onPress={hideTask} style={colorScheme === 'light' ? [button, centered, paragraph] : [buttonDarkMode, centered, paragraph]}>
                                 <Text style={colorScheme === 'light' ? bodyDarkMode : body}>{taskHidden ? 'Mostrar todas las tareas completadas' : 'Ocultar todas las tareas completadas'}</Text>
                             </TouchableOpacity>
                         </View>
                     }
                     refreshControl={
                         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-                    }   
+                    }
                 />
-                <View style={{flex:1,position:'absolute',alignSelf:'flex-end',bottom: 22,paddingRight:22}}>
+                <View style={{ flex: 1, position: 'absolute', alignSelf: 'flex-end', bottom: 22, paddingRight: 22 }}>
                     <TouchableOpacity onPress={() => navigation.navigate('Añadir tareas')} style={colorScheme === 'light' ? addButton : addButtonDarkMode}>
-                        <Text style={colorScheme === 'light' ? [headerListDarkMode,centered] : [headerList,centered]}>+</Text>
+                        <Text style={colorScheme === 'light' ? [headerListDarkMode, centered] : [headerList, centered]}>+</Text>
                     </TouchableOpacity>
                 </View>
             </View>

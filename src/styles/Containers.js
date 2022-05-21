@@ -48,9 +48,9 @@ export const linkText = {
     marginLeft: 10,
 }
 export const normalField = {
-    flex:1,
-    flexDirection:'row',
-    alignItems:'center',
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
 }
 export const button = {
     backgroundColor: Color.blackRaisin,
@@ -63,11 +63,11 @@ export const buttonDarkMode = {
 }
 export const buttonDisabled = {
     ...button,
-    backgroundColor:Color.greyLight,
+    backgroundColor: Color.greyLight,
 }
 export const buttonDisabledDarkMode = {
     ...button,
-    backgroundColor:Color.greyScript,
+    backgroundColor: Color.greyScript,
 }
 export const addButton = {
     backgroundColor: Color.blackRaisin,

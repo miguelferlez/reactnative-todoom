@@ -20,8 +20,8 @@ export default function Exit() {
     }, []);
 
     return (
-        <View style={colorScheme === 'light' ? [container,centered] : [containerDarkMode,centered]}>
-            <Text style={colorScheme === 'light' ? bodyDarkMode : body}>Cargando...</Text>
+        <View style={colorScheme === 'light' ? [container, centered] : [containerDarkMode, centered]}>
+            <Text style={colorScheme === 'light' ? bodyDarkMode : body}>Saliendo...</Text>
         </View>
     );
 }

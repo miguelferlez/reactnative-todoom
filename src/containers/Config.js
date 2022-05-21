@@ -30,7 +30,7 @@ export default function ConfigScreen() {
 
     if (isLoading) {
         return (
-            <View style={colorScheme === 'light' ? [container,centered] : [containerDarkMode,centered]}>
+            <View style={colorScheme === 'light' ? [container, centered] : [containerDarkMode, centered]}>
                 <Text style={colorScheme === 'light' ? body : bodyDarkMode}>Cargando...</Text>
             </View>
         );
@@ -40,7 +40,7 @@ export default function ConfigScreen() {
                 <Text style={colorScheme === 'light' ? [headerTitle, paragraph] : [headerTitleDarkMode, paragraph]}>Diseño</Text>
                 <View style={[paragraph, normalField]}>
                     <Text style={colorScheme === 'light' ? body : bodyDarkMode}>Tema: </Text>
-                    <TouchableOpacity onPress={() => { setIsLoading(true); colorScheme === 'dark' ? setColorScheme('light') : setColorScheme('dark');RNRestart.Restart(); }} style={colorScheme === 'light' ? [linkIcon, button, { marginLeft: 10 }] : [linkIcon, buttonDarkMode, { marginLeft: 10 }]}>
+                    <TouchableOpacity onPress={() => { setIsLoading(true); colorScheme === 'dark' ? setColorScheme('light') : setColorScheme('dark'); RNRestart.Restart(); }} style={colorScheme === 'light' ? [linkIcon, button, { marginLeft: 10 }] : [linkIcon, buttonDarkMode, { marginLeft: 10 }]}>
                         {colorScheme === 'light' ? <LightModeWhite /> : <DarkModeBlack />}
                         <Text style={colorScheme === 'light' ? [bodyDarkMode, linkText] : [body, linkText]}>{colorScheme === 'light' ? 'Modo claro' : 'Modo oscuro'}</Text>
                     </TouchableOpacity>

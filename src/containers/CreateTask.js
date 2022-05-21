@@ -34,12 +34,12 @@ export default function CreateTaskScreen({ navigation }) {
     }, []);
 
     useEffect(() => {
-        if(!text.trim()) {
+        if (!text.trim()) {
             setIsSaveButtonDisabled(true);
-        }else{
+        } else {
             setIsSaveButtonDisabled(false);
         }
-    },[text]);
+    }, [text]);
 
     //Hour
     const showHourPicker = () => {
@@ -73,14 +73,14 @@ export default function CreateTaskScreen({ navigation }) {
 
     const createTask = async () => {
         const newTask = {
-            id: Math.floor(Math.random()*1000),
+            id: Math.floor(Math.random() * 1000),
             text: text,
             hour: hour.getMinutes() < 10 ? hour.getHours() < 10 ? '0' + hour.getHours() + ':0' + hour.getMinutes() : hour.getHours() + ':0' + hour.getMinutes() : hour.getHours() + ':' + hour.getMinutes(),
-            date: date.getDate() === today.getDate() && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear() ? 'Hoy' : date.getDate() === today.getDate() + 1  && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear() ? 'Mañana' : date.getDate() + '/' + (date.getMonth()+1) + '/' + date.getFullYear(),
+            date: date.getDate() === today.getDate() && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear() ? 'Hoy' : date.getDate() === today.getDate() + 1 && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear() ? 'Mañana' : date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear(),
             isFinished: false
-        } 
+        }
         try {
-            await AsyncStorage.setItem('task',JSON.stringify([...taskStored, newTask]));
+            await AsyncStorage.setItem('task', JSON.stringify([...taskStored, newTask]));
             dispatch(addTaskReducer(newTask));
             navigation.navigate('Mis tareas');
         } catch (error) {
@@ -103,12 +103,12 @@ export default function CreateTaskScreen({ navigation }) {
                         style={colorScheme === 'light' ? taskTextInput : taskTextInputDarkMode}
                         placeholder="Escribe lo que tengas pendiente"
                         placeholderTextColor={colorScheme === 'light' ? Color.greyLight : Color.greyScript}
-                        onChangeText={(value) => {setText(value)}}
+                        onChangeText={(value) => { setText(value) }}
                     />
                 </View>
                 <View style={[paragraph, normalField]}>
                     <Text style={colorScheme === 'light' ? body : bodyDarkMode}>¿A qué hora? </Text>
-                    <TouchableOpacity onPress={showHourPicker} style={colorScheme === 'light' ? [button,{flex:1,marginLeft:15}] : [buttonDarkMode,{flex:1,marginLeft:15}] }>
+                    <TouchableOpacity onPress={showHourPicker} style={colorScheme === 'light' ? [button, { flex: 1, marginLeft: 15 }] : [buttonDarkMode, { flex: 1, marginLeft: 15 }]}>
                         <Text style={colorScheme === 'light' ? bodyDarkMode : body}>{hour.getMinutes() < 10 ? hour.getHours() < 10 ? '0' + hour.getHours() + ':0' + hour.getMinutes() : hour.getHours() + ':0' + hour.getMinutes() : hour.getHours() + ':' + hour.getMinutes()}</Text>
                     </TouchableOpacity>
                     <DateTimePicker
@@ -124,16 +124,16 @@ export default function CreateTaskScreen({ navigation }) {
                     <Text style={colorScheme === 'light' ? body : bodyDarkMode}>¿Para hoy?</Text>
                     <Switch
                         value={isToday}
-                        onValueChange={(value) => {setIsToday(value),setIsDatePickerDisabled(value)}}
-                        trackColor={{true:colorScheme==='light'?Color.greyLight:Color.greyScript, false: colorScheme==='light'?Color.blackRaisin:Color.white}}
+                        onValueChange={(value) => { setIsToday(value), setIsDatePickerDisabled(value) }}
+                        trackColor={{ true: colorScheme === 'light' ? Color.greyLight : Color.greyScript, false: colorScheme === 'light' ? Color.blackRaisin : Color.white }}
                         thumbColor={Color.white}
-                        style={{marginLeft:15, transform:[{ scale: 1.5 }]}}   
+                        style={{ marginLeft: 15, transform: [{ scale: 1.5 }] }}
                     />
                 </View>
                 <View style={[paragraph, normalField]}>
                     <Text style={colorScheme === 'light' ? isDatePickerDisabled ? subBody : body : isDatePickerDisabled ? subBodyDarkMode : bodyDarkMode}>Fecha: </Text>
-                    <TouchableOpacity disabled={isDatePickerDisabled} onPress={showDatePicker} style={colorScheme === 'light' ? isDatePickerDisabled ? [buttonDisabled,{flex:1,marginLeft:15}] : [button,{flex:1,marginLeft:15}] : isDatePickerDisabled ? [buttonDisabledDarkMode,{flex:1,marginLeft:15}] : [buttonDarkMode,{flex:1,marginLeft:15}] }>
-                        <Text style={colorScheme === 'light' ? bodyDarkMode : body}>{date.getDate() + '/' + (date.getMonth()+1) + '/' + date.getFullYear()}</Text>
+                    <TouchableOpacity disabled={isDatePickerDisabled} onPress={showDatePicker} style={colorScheme === 'light' ? isDatePickerDisabled ? [buttonDisabled, { flex: 1, marginLeft: 15 }] : [button, { flex: 1, marginLeft: 15 }] : isDatePickerDisabled ? [buttonDisabledDarkMode, { flex: 1, marginLeft: 15 }] : [buttonDarkMode, { flex: 1, marginLeft: 15 }]}>
+                        <Text style={colorScheme === 'light' ? bodyDarkMode : body}>{date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear()}</Text>
                     </TouchableOpacity>
                     <DateTimePicker
                         isVisible={isDatePickerVisible}
@@ -143,7 +143,7 @@ export default function CreateTaskScreen({ navigation }) {
                         onCancel={hideDatePicker}
                     />
                 </View>
-                <TouchableOpacity onPress={createTask} disabled={!text} style={colorScheme === 'light' ? isSaveButtonDisabled ? [centered,buttonDisabled,{marginTop: 10, width: '100%'}] : [centered,button,{marginTop: 10, width: '100%'}] : isSaveButtonDisabled ? [centered,buttonDisabledDarkMode,{marginTop: 10, width: '100%'}] : [centered,buttonDarkMode,{marginTop: 10, width: '100%'}]} >
+                <TouchableOpacity onPress={createTask} disabled={!text} style={colorScheme === 'light' ? isSaveButtonDisabled ? [centered, buttonDisabled, { marginTop: 10, width: '100%' }] : [centered, button, { marginTop: 10, width: '100%' }] : isSaveButtonDisabled ? [centered, buttonDisabledDarkMode, { marginTop: 10, width: '100%' }] : [centered, buttonDarkMode, { marginTop: 10, width: '100%' }]} >
                     <Text style={colorScheme === 'light' ? bodyDarkMode : body}>Guardar tarea</Text>
                 </TouchableOpacity>
             </ScrollView>
