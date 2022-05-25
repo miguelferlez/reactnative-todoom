@@ -17,7 +17,8 @@ export default function ConfigScreen() {
             } else {
                 setColorScheme('dark');
             }
-        }).then(setIsLoading(false));
+        })
+        setIsLoading(false);
     }, []);
 
     useEffect(() => {

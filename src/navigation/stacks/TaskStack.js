@@ -22,7 +22,8 @@ export default function TaskStack({ navigation }) {
             } else {
                 setColorScheme('dark');
             }
-        }).then(setIsLoading(false));
+        })
+        setIsLoading(false);
     }, []);
 
     if (isLoading) {

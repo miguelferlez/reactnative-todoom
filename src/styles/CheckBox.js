@@ -63,7 +63,7 @@ export default function CheckBox({ id, isFinished, text, hour, date, navigation 
                     />
                 </TouchableOpacity>
                 <View style={{ marginHorizontal: 10 }}>
-                    <Text style={[colorScheme === 'light' ? isFinished ? [subBody, { textDecorationLine: 'line-through' }] : body : isFinished ? [subBodyDarkMode, { textDecorationLine: 'line-through' }] : bodyDarkMode]}>{text}</Text>
+                    <Text style={colorScheme === 'light' ? isFinished ? [subBody, { textDecorationLine: 'line-through' }] : body : isFinished ? [subBodyDarkMode, { textDecorationLine: 'line-through' }] : bodyDarkMode}>{text}</Text>
                     <Text style={colorScheme === 'light' ? isFinished ? [subBody, { textDecorationLine: 'line-through' }] : subBody : isFinished ? [subBodyDarkMode, { textDecorationLine: 'line-through' }] : subBodyDarkMode}>{hour}</Text>
                 </View>
             </View>

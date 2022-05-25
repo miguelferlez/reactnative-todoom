@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TextInput, ScrollView, Touchable, TouchableOpacity, Switch } from "react-native";
+import { View, Text, TextInput, ScrollView, TouchableOpacity, Switch } from "react-native";
 import { button, buttonDarkMode, buttonDisabled, buttonDisabledDarkMode, centered, container, containerDarkMode, normalField, paragraph, taskTextInput, taskTextInputDarkMode } from "../styles/Containers";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { body, bodyDarkMode, subBody, subBodyDarkMode } from "../styles/Typography";

@@ -16,7 +16,8 @@ export default function ContactScreen() {
             } else {
                 setColorScheme('dark');
             }
-        }).then(setIsLoading(false));
+        })
+        setIsLoading(false);
     }, []);
 
     if (isLoading) {
