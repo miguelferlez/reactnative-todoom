@@ -5,24 +5,24 @@
 
 ## Introducción
 
-**Todoom** es una aplicación móvil para gestionar tareas desarrollado con React Native y probado en Android. Este proyecto ha sido desarrollado por Miguel Fernández como, más información en la app design document del proyecto.
+**Todoom** es una aplicación móvil para gestionar tareas desarrollado con React Native y probado en Android. Este proyecto ha sido desarrollado por Miguel Fernández como, más información en la memoria del proyecto.
 
 ## Instalación
 
-Programas requeridos para la ejecución del proyecto:
+#### Programas requeridos para la ejecución del proyecto:
 
 - Visual Studio Code  
 - Android Studio
 - Node.js
 - Java Development Kit
 
-Plugins requiereidos en **Visudal Studio Code**:
+#### Plugins requeridos en Visudal Studio Code:
 
 - React Native Tools
 - JavaScript (ES6) Code Snippets
 - Extension Pack for Java
 
-¡Atención! Se requiere de la versión de **Java Develpment Kit** igual o superior a la 16.0.2, y del **emulador de Android Studio** debidamente configurado. Las pasos para tener preparado Android Studio son los siguientes:
+***¡Atención!*** Se requiere de una **versión de Java Develpment Kit** igual o superior a la 16.0.2, y del **emulador de Android Studio** debidamente configurado. Las pasos para tener preparado Android Studio son los siguientes:
 
 1. Intalar [JDK](https://www.oracle.com/java/technologies/javase/jdk16-archive-downloads.html) y añadir `C:\Program Files\Java\jdk-16.0.2\bin` a las variables de entorno del sistema (la variable debe estar por encima del resto).
 2. Instalar [Android Studio](https://developer.android.com/studio).
@@ -33,7 +33,7 @@ Plugins requiereidos en **Visudal Studio Code**:
 7. Volver a ventana principal, More Actions > AVD Manager y crear un dispositivo virtual nuevo.
 8. Seleccionar el modelo *Nexus 6P*, después *R (API Level 30)* como imagen del sistema y finalizar el proceso.
 
-Una vez configurado el entorno de emulación de Android, en Visual Studio se deben seguir los siguientes pasos:
+Una vez configurado el entorno de emulación de Android, **en Visual Studio** se deben seguir los siguientes pasos:
 
 1. Abrir la carpeta del proyecto.
 2. Abrir una nueva terminal desde el programa y ejecutar desde la ráiz del proyecto `npx react-native start` para abrir Metro.
