@@ -5,7 +5,7 @@
 
 ## Introducción
 
-**Todoom** es una aplicación móvil para gestionar tareas desarrollado con React Native y probado en Android.
+**Todoom** es una aplicación móvil para gestionar tareas desarrollado con React Native y probado en Android. Este proyecto ha sido desarrollado por Miguel Fernández como, más información en la app design document del proyecto.
 
 ## Instalación
 
@@ -24,7 +24,7 @@ Plugins requiereidos en **Visudal Studio Code**:
 
 ¡Atención! Se requiere de la versión de **Java Develpment Kit** igual o superior a la 16.0.2, y del **emulador de Android Studio** debidamente configurado. Las pasos para tener preparado Android Studio son los siguientes:
 
-1. Añadir `C:\Program Files\Java\jdk-16.0.2\bin` a las variables de entorno del sistema (la variable debe estar por encima del resto).
+1. Intalar [JDK](https://www.oracle.com/java/technologies/javase/jdk16-archive-downloads.html) y añadir `C:\Program Files\Java\jdk-16.0.2\bin` a las variables de entorno del sistema (la variable debe estar por encima del resto).
 2. Instalar [Android Studio](https://developer.android.com/studio).
 3. Dentro del programa de Android Studio, More Actions > SDK Manager > Android SDK > SDK Platforms y habilitar en la esquina inferior derecha la opción *Show Package Details*.
 4. Marcar en Android 11.0 (R) las opciones *Android SDK Platform 30*, *Sources for Android 30* y *Google APIs Intel x86 Atom_64 System Image*
@@ -39,4 +39,4 @@ Una vez configurado el entorno de emulación de Android, en Visual Studio se deb
 2. Abrir una nueva terminal desde el programa y ejecutar desde la ráiz del proyecto `npx react-native start` para abrir Metro.
 3. Abrir otra terminal y ejecutar desdde la raíz del proyecto `npx react-native run-android` para abrir el emulador e instalar la aplicación.
 
-Para más información consulta en [la documentación de React Native](https://reactnative.dev/docs/next/environment-setup).
+Para más información consulta en la [documentación de React Native](https://reactnative.dev/docs/next/environment-setup).
