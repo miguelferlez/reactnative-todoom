@@ -6,6 +6,7 @@ import { TouchableOpacity, View, Text } from 'react-native';
 import { BackBlack, BackWhite, DropDownBlack, DropDownWhite } from '../../styles/Icons';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { centered, container, containerDarkMode } from '../../styles/Containers';
+import * as Color from '../../styles/Colors';
 
 const Stack = createNativeStackNavigator();
 
@@ -13,14 +14,19 @@ export default function AboutStack({ navigation }) {
     const [colorScheme, setColorScheme] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        AsyncStorage.getItem('isDarkMode').then((value) => {
+    async function getColorScheme() {
+        await AsyncStorage.getItem('isDarkMode').then((value) => {
             if (value == null || value == '0') {
                 setColorScheme('light');
             } else {
                 setColorScheme('dark');
             }
-        }).then(setIsLoading(false));
+        })
+    }
+
+    useEffect(() => {
+        getColorScheme();
+        setIsLoading(false);
     }, []);
 
     if (isLoading) {
@@ -35,7 +41,7 @@ export default function AboutStack({ navigation }) {
                 <Stack.Screen name="Sobre nosotros" component={AboutScreen}
                     options={colorScheme === 'light' ? {
                         headerTitleAlign: 'center',
-                        headerTransparent: true,
+                        headerStyle:{ backgroundColor: Color.white },
                         headerTitleStyle: { ...headerTitle },
                         headerShadowVisible: false,
                         headerLeft: () => {
@@ -55,7 +61,7 @@ export default function AboutStack({ navigation }) {
                     } :
                         {
                             headerTitleAlign: 'center',
-                            headerTransparent: true,
+                            headerStyle:{ backgroundColor: Color.blackRaisin },
                             headerTitleStyle: { ...headerTitleDarkMode },
                             headerShadowVisible: false,
                             headerLeft: () => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity, Linking } from "react-native";
-import { centered, container, containerDarkMode, linkIcon, linkText, paragraph } from "../styles/Containers";
+import { centered, container, containerDarkMode, containerScroll, containerScrollDarkMode, linkIcon, linkText, paragraph } from "../styles/Containers";
 import { GithubBlack, GithubWhite } from "../styles/Icons";
 import { headerTitle, bodyInfo, bodyInfoItalic, bodyInfoBold, headerTitleDarkMode, bodyInfoDarkMode, bodyInfoBoldDarkMode, bodyDarkMode, body } from "../styles/Typography";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -9,14 +9,18 @@ export default function AboutScreen() {
     const [isLoading, setIsLoading] = useState(true);
     const [colorScheme, setColorScheme] = useState(null);
 
-    useEffect(() => {
-        AsyncStorage.getItem('isDarkMode').then((value) => {
+    async function getColorScheme() {
+        await AsyncStorage.getItem('isDarkMode').then((value) => {
             if (value == null || value == '0') {
                 setColorScheme('light');
             } else {
                 setColorScheme('dark');
             }
         })
+    }
+
+    useEffect(() => {
+        getColorScheme();
         setIsLoading(false);
     }, []);
 
@@ -28,7 +32,7 @@ export default function AboutScreen() {
         );
     } else {
         return (
-            <ScrollView style={colorScheme === 'light' ? container : containerDarkMode}>
+            <ScrollView style={colorScheme === 'light' ? containerScroll : containerScrollDarkMode}>
                 <Text style={colorScheme === 'light' ? [paragraph, headerTitle] : [paragraph, headerTitleDarkMode]}>¿Qué es Todoom?</Text>
                 <Text style={colorScheme === 'light' ? [paragraph, bodyInfo] : [paragraph, bodyInfoDarkMode]}>
                     Todoom es la aplicación para anotar y ponerse al día con las tareas que tú, amante
@@ -59,7 +63,7 @@ export default function AboutScreen() {
                     {colorScheme === 'light' ? <GithubBlack /> : <GithubWhite />}
                     <Text style={colorScheme === 'light' ? [bodyInfoBold, linkText] : [bodyInfoBoldDarkMode, linkText]}>Repositorio de la aplicación</Text>
                 </TouchableOpacity>
-                <View style={{ marginBottom: 45 }} />
+                <View style={{ marginBottom: 45 }}/>
             </ScrollView>
         );
     }
