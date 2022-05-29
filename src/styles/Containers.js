@@ -31,6 +31,18 @@ export const containerDarkMode = {
     ...container,
     backgroundColor: Color.blackRaisin,
 }
+export const containerScroll = {
+    backgroundColor: Color.white,
+    width: '100%',
+    height: '100%',
+    paddingHorizontal: 22,
+    paddingBottom:22,
+
+}
+export const containerScrollDarkMode = {
+    ...containerScroll,
+    backgroundColor: Color.blackRaisin,
+}
 export const paragraph = {
     marginBottom: 20,
 }
