@@ -22,7 +22,7 @@ export default function CheckBox({ id, isFinished, text, hour, date, navigation 
             AsyncStorage.setItem('task', JSON.stringify(
                 taskStored.map(item => {
                     if (item.id === id) {
-                        return { ...taskStored, isFinished: !taskStored.isFinished }
+                        return { ...taskStored, id: Math.floor(Math.random()*1000), isFinished: !isFinished, text: text, hour: hour, date: date }
                     }
                     return item;
                 })
