@@ -39,4 +39,6 @@ Una vez configurado el entorno de emulación de Android, **en Visual Studio** se
 2. Abrir una nueva terminal desde el programa y ejecutar desde la ráiz del proyecto `npx react-native start` para abrir Metro.
 3. Abrir otra terminal y ejecutar desdde la raíz del proyecto `npx react-native run-android` para abrir el emulador e instalar la aplicación.
 
-Para más información consulta en la [documentación de React Native](https://reactnative.dev/docs/next/environment-setup).
+Para más información consultar [cómo crear un entorno de desarrollo en React Native](https://reactnative.dev/docs/next/environment-setup).
+
+Para ejecutar el proyecto desde un dispositivo móvil deben activarse las **opciones de desarrollador** y **depuración por USB** dentro de los ajustes del dispositivo. Para más información consultar en [cómo ejecutar una aplicación de React Native desde un dispositivo](https://reactnative.dev/docs/running-on-device).
