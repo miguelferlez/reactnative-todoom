@@ -5,7 +5,7 @@
 
 ## Introducción
 
-**Todoom** es una aplicación móvil para gestionar tareas desarrollado con React Native y probado en Android. Este proyecto ha sido desarrollado por Miguel Fernández como, más información en la memoria del proyecto.
+**Todoom** es una aplicación móvil para gestionar tareas desarrollado con React Native y probado en Android. Este proyecto ha sido desarrollado por Miguel Fernández. Más información en la memoria del proyecto.
 
 ## Instalación
 
